@@ -14,3 +14,6 @@ mx.scratch
 *.fls
 *.fdb_latexmk
 *.xdv
+
+# Local STM32 build/debug tools
+.tools/

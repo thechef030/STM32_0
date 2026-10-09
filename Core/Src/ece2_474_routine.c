@@ -51,7 +51,48 @@ void ece2_474_init(void)
 /* 메인 루프에서 반복해서 호출됩니다. */
 void polling_routine(void)
 {
-    /* 실습 코드 작성 */
+    /* static 변수는 다음 호출에서도 값을 유지합니다. 시간 단위는 ms입니다. */
+    static uint32_t interval_ms = 1000U;
+    static uint32_t last_toggle_ms = 0U;
+    static uint32_t last_press_ms = 0U;
+    static uint8_t press_seen = 0U;
+    static GPIO_PinState previous = GPIO_PIN_RESET;
+
+    uint32_t now_ms = HAL_GetTick();
+    GPIO_PinState current = HAL_GPIO_ReadPin(
+        BUTTON_ece2_GPIO_Port, BUTTON_ece2_Pin);
+
+    /* LOW -> HIGH인 누른 순간만 처리합니다. 길게 눌러도 한 번만 바뀝니다.
+     * 첫 입력은 바로 받고, 그 뒤 200 ms 이내의 반복 입력은 무시합니다.
+     */
+    if (current == GPIO_PIN_SET && previous == GPIO_PIN_RESET
+        && (press_seen == 0U || now_ms - last_press_ms >= 200U))
+    {
+        last_press_ms = now_ms;
+        press_seen = 1U;
+
+        /* 1000 -> 2000 -> 4000 -> 8000 -> 1000 ms */
+        interval_ms = (interval_ms == 8000U) ? 1000U : interval_ms * 2U;
+
+        /* 누른 시점부터 새 간격을 재어 다음 LED 상태 변경에 적용합니다. */
+        last_toggle_ms = now_ms;
+    }
+    previous = current;
+
+    /* 기다리는 함수를 사용하지 않으므로 LED 점멸 중에도 버튼을 읽습니다.
+     * unsigned 시간 차이를 사용해 HAL_GetTick()의 값이 순환해도 처리합니다.
+     */
+    if (now_ms - last_toggle_ms >= interval_ms)
+    {
+        last_toggle_ms = now_ms;
+#if defined(STM32_0_EXTERNAL_LED_PB0)
+        /* 과제 2: PB0에 연결한 외부 LED */
+        HAL_GPIO_TogglePin(GPIO_OUT1_ece2_GPIO_Port, GPIO_OUT1_ece2_Pin);
+#else
+        /* 과제 1: PA5 내장 LED */
+        HAL_GPIO_TogglePin(LED_ece2_GPIO_Port, LED_ece2_Pin);
+#endif
+    }
 }
 
 /* 1. 사용자 버튼 PC13을 눌렀을 때 호출됩니다. 우선순위: 7.

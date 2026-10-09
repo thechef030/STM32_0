@@ -2,7 +2,12 @@
     "configurations": [
         {
             "name": "STM32",
-            "compileCommands": "${workspaceFolder}/build/Debug/compile_commands.json"
+            "compileCommands": "${workspaceFolder}/build/Debug/compile_commands.json",
+            "intelliSenseMode": "gcc-arm",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "compilerPath": "C:/Users/tjgus/stm32_lab/.tools/bin/arm-none-eabi-gcc.exe"
         }
-    ]
+    ],
+    "version": 4
 }

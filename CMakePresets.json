@@ -1,38 +1,60 @@
 {
-    "version": 3,
-    "configurePresets": [
-        {
-            "name": "default",
-            "hidden": true,
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/${presetName}",
-		    "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
-            "cacheVariables": {
-            }
-        },
-        {
-            "name": "Debug",
-            "inherits": "default",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "Release",
-            "inherits": "default",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
-            }
-        }
-    ],
-    "buildPresets": [
-        {
-            "name": "Debug",
-            "configurePreset": "Debug"
-        },
-        {
-            "name": "Release",
-            "configurePreset": "Release"
-        }
-    ]
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "default",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
+      "cacheVariables": {
+        "CMAKE_MAKE_PROGRAM": "${sourceDir}/.tools/bundles/ninja/1.13.2+st.1/bin/ninja.exe"
+      },
+      "environment": {
+        "PATH": "${sourceDir}/.tools/bin;${sourceDir}/.tools/bundles/ninja/1.13.2+st.1/bin;$penv{PATH}",
+        "CUBE_BUNDLE_PATH": "${sourceDir}/.tools/bundles",
+        "CUBE_CACHE_PATH": "${sourceDir}/.tools/cache",
+        "CUBE_LOG_PATH": "${sourceDir}/.tools/logs"
+      }
+    },
+    {
+      "name": "Debug",
+      "inherits": "default",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "STM32_0_EXTERNAL_LED_PB0": "OFF"
+      },
+      "displayName": "Task 1 - Internal LED (Debug)"
+    },
+    {
+      "name": "Release",
+      "inherits": "default",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "ExternalLED",
+      "displayName": "Task 2 - External LED PB0 (Debug)",
+      "inherits": "default",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "STM32_0_EXTERNAL_LED_PB0": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "Debug",
+      "configurePreset": "Debug"
+    },
+    {
+      "name": "Release",
+      "configurePreset": "Release"
+    },
+    {
+      "name": "ExternalLED",
+      "configurePreset": "ExternalLED"
+    }
+  ]
 }

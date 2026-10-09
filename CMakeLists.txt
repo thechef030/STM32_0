@@ -68,3 +68,9 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 
     # Add user defined libraries
 )
+
+# STM32_0: Debug = task 1 (PA5), ExternalLED = task 2 (PB0).
+option(STM32_0_EXTERNAL_LED_PB0 "Use PB0 external LED for STM32_0 task 2" OFF)
+if(STM32_0_EXTERNAL_LED_PB0)
+    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE STM32_0_EXTERNAL_LED_PB0)
+endif()
