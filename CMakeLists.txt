@@ -70,6 +70,9 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 )
 
 # STM32_0: Debug = task 1 (PA5), ExternalLED = task 2 (PB0).
+# 이옵션을 켜면 STM32_0 과제 2를 수행할 수 있다. (PB0 외부 LED 사용)
+# 이옵션을 끄면 STM32_0 과제 1을 수행할 수 있다. (PA5 내장 LED 사용)
+# 따라서 과제를 바꿔 수행할 때 c파일을 덮어쓰지 않아도 된다.
 option(STM32_0_EXTERNAL_LED_PB0 "Use PB0 external LED for STM32_0 task 2" OFF)
 if(STM32_0_EXTERNAL_LED_PB0)
     target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE STM32_0_EXTERNAL_LED_PB0)
