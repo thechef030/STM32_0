@@ -1,6 +1,4 @@
 /*
- * 초기화·폴링·인터럽트 실습 템플릿입니다. CubeMX 자동 생성 파일이 아닙니다.
- * 학생은 아래 함수의 '실습 코드 작성' 부분을 채웁니다.
  * 아래쪽 HAL 콜백은 자동 생성된 인터럽트 처리 코드와 실습 함수를 연결합니다.
  * 인터럽트에서는 처리할 일을 기록하고 빠르게 돌아옵니다.
  * 인터럽트 함수 안에서는 HAL_Delay, scanf, getchar, printf를 사용하지 않습니다.
@@ -18,11 +16,6 @@
 /* 주변장치 초기화가 끝난 뒤, 메인 루프에 들어가기 전에 한 번 호출됩니다. */
 void ece2_474_init(void)
 {
-    /* 필요한 기능만 주석을 해제합니다. 기본 핀·통신 설정은 이미 끝난 상태입니다.
-     * VS Code에서 해당 줄에 커서를 놓거나 여러 줄을 선택하고 Ctrl + /를 누르면
-     * 줄 주석(//)을 해제하거나 다시 설정할 수 있습니다.
-     */
-
     /* TIM6: 100 ms마다 tim6_isr_p4()를 호출합니다. */
     // HAL_TIM_Base_Start_IT(&htim6);
 
@@ -72,6 +65,7 @@ void polling_routine(void)
         press_seen = 1U;
 
         /* 1000 -> 2000 -> 4000 -> 8000 -> 1000 ms */
+        /* {{순환한다는 의미의 코드이다}}*/
         interval_ms = (interval_ms == 8000U) ? 1000U : interval_ms * 2U;
 
         /* 누른 시점부터 새 간격을 재어 다음 LED 상태 변경에 적용합니다. */
@@ -79,12 +73,13 @@ void polling_routine(void)
     }
     previous = current;
 
-    /* 기다리는 함수를 사용하지 않으므로 LED 점멸 중에도 버튼을 읽습니다.
+    /* {{기다리는 함수를 사용하지 않으므로 LED 점멸 중에도 버튼을 읽는다.}}
      * unsigned 시간 차이를 사용해 HAL_GetTick()의 값이 순환해도 처리합니다.
      */
     if (now_ms - last_toggle_ms >= interval_ms)
     {
         last_toggle_ms = now_ms;
+        /*{{과제에 따라서 LED 상태가 변경된다}}*/
 #if defined(STM32_0_EXTERNAL_LED_PB0)
         /* 과제 2: PB0에 연결한 외부 LED */
         HAL_GPIO_TogglePin(GPIO_OUT1_ece2_GPIO_Port, GPIO_OUT1_ece2_Pin);
