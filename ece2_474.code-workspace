@@ -49,7 +49,7 @@
         "targetArchitecture": "arm",
         "miDebuggerPath": "C:/Users/tjgus/stm32_lab/.tools/bin/arm-none-eabi-gdb.exe",
         "debugServerPath": "C:/Users/tjgus/stm32_lab/.tools/bundles/stlink-gdbserver/7.14.0+st.2/bin/ST-LINK_gdbserver.exe",
-        "debugServerArgs": "-p 61234 -d -k -cp \"C:/Users/tjgus/stm32_lab/.tools/bundles/programmer/2.23.0/bin\"",
+        "debugServerArgs": "-p 3333 -z 3334 -d -k -cp \"C:/Users/tjgus/stm32_lab/.tools/bundles/programmer/2.23.0/bin\"",
         "serverStarted": "Waiting for debugger connection",
         "serverLaunchTimeout": 30000,
         "filterStdout": true,
@@ -62,7 +62,7 @@
             "description": "Load firmware executable and debug symbols"
           },
           {
-            "text": "-target-select remote localhost:61234",
+            "text": "-target-select remote localhost:3333",
             "description": "Connect to ST-LINK"
           },
           {
@@ -95,7 +95,7 @@
         "targetArchitecture": "arm",
         "miDebuggerPath": "C:/Users/tjgus/stm32_lab/.tools/bin/arm-none-eabi-gdb.exe",
         "debugServerPath": "C:/Users/tjgus/stm32_lab/.tools/bundles/stlink-gdbserver/7.14.0+st.2/bin/ST-LINK_gdbserver.exe",
-        "debugServerArgs": "-p 61234 -d -k -cp \"C:/Users/tjgus/stm32_lab/.tools/bundles/programmer/2.23.0/bin\"",
+        "debugServerArgs": "-p 3333 -z 3334 -d -k -cp \"C:/Users/tjgus/stm32_lab/.tools/bundles/programmer/2.23.0/bin\"",
         "serverStarted": "Waiting for debugger connection",
         "serverLaunchTimeout": 30000,
         "filterStdout": true,
@@ -108,7 +108,7 @@
             "description": "Load firmware executable and debug symbols"
           },
           {
-            "text": "-target-select remote localhost:61234",
+            "text": "-target-select remote localhost:3333",
             "description": "Connect to ST-LINK"
           },
           {
@@ -212,3 +212,4 @@
     ]
   }
 }
+
